@@ -11,4 +11,4 @@ output "Cluster" {
 
 output "NodePool" {
   value = module.oci-oke.node_pool
-} 
+}
