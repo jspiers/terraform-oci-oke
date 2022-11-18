@@ -1,127 +1,142 @@
-## Copyright © 2020, Oracle and/or its affiliates. 
-## All rights reserved. The Universal Permissive License (UPL), Version 1.0 as shown at http://oss.oracle.com/licenses/upl
-
 variable "availability_domain" {
+  type    = string
   default = ""
 }
 
-variable "compartment_ocid" {
-  default = ""
+variable "compartment_id" {
+  type = string
 }
 
-variable "tenancy_ocid" {
-  default = ""
-}
+# variable "tenancy_id" {
+#   type = string
+# }
 
 variable "use_existing_vcn" {
   default = true
 }
 
 variable "vcn_cidr" {
+  type    = string
   default = "10.0.0.0/16"
 }
 
 variable "vcn_id" {
+  type    = string
   default = ""
 }
 
-variable "nodepool_subnet_id" {
+variable "nodes_subnet_id" {
+  type    = string
   default = ""
 }
 
-variable "nodepool_subnet_cidr" {
+variable "nodes_subnet_cidr" {
+  type    = string
   default = "10.0.1.0/24"
 }
 
-variable "lb_subnet_id" {
+variable "loadbalancer_subnet_id" {
+  type    = string
   default = ""
 }
 
-variable "lb_subnet_cidr" {
+variable "loadbalancer_subnet_cidr" {
+  type    = string
   default = "10.0.2.0/24"
 }
 
-variable "api_endpoint_subnet_id" {
+variable "api_subnet_id" {
+  type    = string
   default = ""
 }
 
-variable "api_endpoint_subnet_cidr" {
+variable "api_subnet_cidr" {
+  type    = string
   default = "10.0.3.0/24"
 }
 
-variable "oke_cluster_name" {
-  default = "OKE_Cluster"
+variable "cluster_name" {
+  type    = string
+  default = "my_cluster"
 }
 
 variable "vcn_native" {
+  type    = bool
   default = true
 }
 
-variable "is_api_endpoint_subnet_public" {
+variable "is_api_subnet_public" {
+  type    = bool
   default = false
 }
 
-variable "is_lb_subnet_public" {
+variable "is_loadbalancer_subnet_public" {
+  type    = bool
   default = false
 }
 
-variable "is_nodepool_subnet_public" {
+variable "is_nodes_subnet_public" {
+  type    = bool
   default = false
 }
 
-variable "k8s_version" {
-  default = "v1.20.11"
+variable "is_pv_encryption_in_transit_enabled" {
+  type    = bool
+  default = true
 }
 
-variable "pool_name" {
-  default = "Demo_Node_Pool"
+variable "kubernetes_version" {
+  type    = string
+  default = "v1.24.1"
 }
 
-variable "node_shape" {
-  default = "VM.Standard.E3.Flex"
-}
-
-variable "node_image_id" {
-  default = ""
-}
-
-variable "node_pool_boot_volume_size_in_gbs" {
-  default = 50
-}
-
-variable "node_ocpus" {
-  default = 1
-}
-
-variable "node_memory" {
-  default = 4
+variable "node_pools" {
+  type = map(object({
+    shape                    = string
+    ocpus                    = number
+    memory                   = number
+    size                     = number
+    operating_system         = string
+    operating_system_version = string
+  }))
+  default = {
+    trident = {
+      shape                    = "VM.Standard.A1.Flex"
+      ocpus                    = 1
+      memory                   = 6
+      size                     = 3
+      operating_system         = "Oracle Linux"
+      operating_system_version = "8"
+    }
+  }
 }
 
 variable "pods_cidr" {
-  default = "10.1.0.0/16"
+  type    = string
+  default = "10.200.0.0/16"
 }
 
 variable "services_cidr" {
-  default = "10.2.0.0/16"
-}
-
-variable "node_linux_version" {
-  default = "7.9"
+  type    = string
+  default = "10.201.0.0/16"
 }
 
 variable "node_count" {
+  type    = number
   default = 3
 }
 
-variable "cluster_options_add_ons_is_kubernetes_dashboard_enabled" {
+variable "is_kubernetes_dashboard_enabled" {
+  type    = bool
   default = true
 }
 
-variable "cluster_options_add_ons_is_tiller_enabled" {
-  default = true
+variable "is_tiller_enabled" {
+  type    = bool
+  default = false
 }
 
-variable "cluster_options_admission_controller_options_is_pod_security_policy_enabled" {
+variable "is_pod_security_policy_enabled" {
   default = false
 }
 
