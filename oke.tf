@@ -71,7 +71,7 @@ resource "oci_containerengine_node_pool" "pools" {
     defined_tags                        = var.defined_tags
   }
   node_eviction_node_pool_settings {
-    eviction_grace_duration = "PT60M" # 1 hour
+    eviction_grace_duration = "PT1H" # 1 hour
   }
   defined_tags = var.defined_tags
 }
