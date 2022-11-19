@@ -127,7 +127,7 @@ resource "oci_core_security_list" "nodes_sec_list" {
   display_name   = "nodes_sec_list"
   vcn_id         = oci_core_vcn.vcn.id
   egress_security_rules {
-    protocol         = "All"
+    protocol         = "all"
     destination_type = "CIDR_BLOCK"
     destination      = local.subnet_cidrs["nodes"]
   }
@@ -168,7 +168,7 @@ resource "oci_core_security_list" "nodes_sec_list" {
     destination      = "0.0.0.0/0"
   }
   ingress_security_rules {
-    protocol = "All"
+    protocol = "all"
     source   = local.subnet_cidrs["nodes"]
   }
   ingress_security_rules {
