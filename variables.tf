@@ -1,24 +1,10 @@
-variable "tenancy_id" {
-  type = string
-}
-variable "user_id" {
-  type = string
-}
-
-variable "oci_private_key_path" {
-  type = string
-}
-
 variable "compartment_id" {
   type = string
 }
 
-variable "region" {
-  type = string
-}
-
-variable "fingerprint" {
-  type = string
+variable "vcn_name" {
+  type    = string
+  default = "cusk"
 }
 
 variable "vcn_cidr" {

@@ -3,5 +3,6 @@ output "cluster" {
 }
 
 output "kubeconfig" {
-  value = data.oci_containerengine_cluster_kube_config.kubeconfig.content
+  value     = data.oci_containerengine_cluster_kube_config.kubeconfig.content
+  sensitive = true
 }

@@ -1,7 +1,8 @@
 resource "oci_core_vcn" "vcn" {
   cidr_block     = var.vcn_cidr
   compartment_id = var.compartment_id
-  display_name   = "vcn"
+  display_name   = var.vcn_name
+  dns_label      = var.vcn_name
 }
 
 locals {
@@ -197,6 +198,7 @@ resource "oci_core_subnet" "api" {
   compartment_id = var.compartment_id
   vcn_id         = oci_core_vcn.vcn.id
   display_name   = "api"
+  dns_label      = "api"
   security_list_ids = [
     oci_core_vcn.vcn.default_security_list_id,
     oci_core_security_list.api_sec_list.id
@@ -210,6 +212,7 @@ resource "oci_core_subnet" "loadbalancer" {
   compartment_id             = var.compartment_id
   vcn_id                     = oci_core_vcn.vcn.id
   display_name               = "loadbalancer"
+  dns_label                  = "loadbalancer"
   security_list_ids          = [oci_core_vcn.vcn.default_security_list_id]
   route_table_id             = var.is_loadbalancer_subnet_public ? oci_core_route_table.igw.id : oci_core_route_table.natgw_and_sgw.id
   prohibit_public_ip_on_vnic = var.is_loadbalancer_subnet_public ? false : true
@@ -220,6 +223,7 @@ resource "oci_core_subnet" "nodes" {
   compartment_id = var.compartment_id
   vcn_id         = oci_core_vcn.vcn.id
   display_name   = "nodes"
+  dns_label      = "nodes"
   security_list_ids = [
     oci_core_vcn.vcn.default_security_list_id,
     oci_core_security_list.nodes_sec_list.id
