@@ -1,88 +1,34 @@
-variable "availability_domain" {
-  type    = string
-  default = ""
+variable "tenancy_id" {
+  type = string
+}
+variable "user_id" {
+  type = string
+}
+
+variable "oci_private_key_path" {
+  type = string
 }
 
 variable "compartment_id" {
   type = string
 }
 
-# variable "tenancy_id" {
-#   type = string
-# }
+variable "region" {
+  type = string
+}
 
-variable "use_existing_vcn" {
-  default = true
+variable "fingerprint" {
+  type = string
 }
 
 variable "vcn_cidr" {
   type    = string
-  default = "10.0.0.0/16"
-}
-
-variable "vcn_id" {
-  type    = string
-  default = ""
-}
-
-variable "nodes_subnet_id" {
-  type    = string
-  default = ""
-}
-
-variable "nodes_subnet_cidr" {
-  type    = string
-  default = "10.0.1.0/24"
-}
-
-variable "loadbalancer_subnet_id" {
-  type    = string
-  default = ""
-}
-
-variable "loadbalancer_subnet_cidr" {
-  type    = string
-  default = "10.0.2.0/24"
-}
-
-variable "api_subnet_id" {
-  type    = string
-  default = ""
-}
-
-variable "api_subnet_cidr" {
-  type    = string
-  default = "10.0.3.0/24"
+  default = "10.1.0.0/16"
 }
 
 variable "cluster_name" {
   type    = string
-  default = "my_cluster"
-}
-
-variable "vcn_native" {
-  type    = bool
-  default = true
-}
-
-variable "is_api_subnet_public" {
-  type    = bool
-  default = false
-}
-
-variable "is_loadbalancer_subnet_public" {
-  type    = bool
-  default = false
-}
-
-variable "is_nodes_subnet_public" {
-  type    = bool
-  default = false
-}
-
-variable "is_pv_encryption_in_transit_enabled" {
-  type    = bool
-  default = true
+  default = "nautilus"
 }
 
 variable "kubernetes_version" {
@@ -111,6 +57,31 @@ variable "node_pools" {
   }
 }
 
+variable "vcn_native" {
+  type    = bool
+  default = true
+}
+
+variable "is_api_subnet_public" {
+  type    = bool
+  default = true
+}
+
+variable "is_loadbalancer_subnet_public" {
+  type    = bool
+  default = true
+}
+
+variable "is_nodes_subnet_public" {
+  type    = bool
+  default = false
+}
+
+variable "is_pv_encryption_in_transit_enabled" {
+  type    = bool
+  default = true
+}
+
 variable "pods_cidr" {
   type    = string
   default = "10.200.0.0/16"
@@ -121,14 +92,9 @@ variable "services_cidr" {
   default = "10.201.0.0/16"
 }
 
-variable "node_count" {
-  type    = number
-  default = 3
-}
-
 variable "is_kubernetes_dashboard_enabled" {
   type    = bool
-  default = true
+  default = false
 }
 
 variable "is_tiller_enabled" {
@@ -137,25 +103,31 @@ variable "is_tiller_enabled" {
 }
 
 variable "is_pod_security_policy_enabled" {
+  type    = bool
   default = false
 }
 
 variable "node_pool_initial_node_labels_key" {
+  type    = string
   default = "key"
 }
 
 variable "node_pool_initial_node_labels_value" {
+  type    = string
   default = "value"
 }
 
 variable "cluster_kube_config_token_version" {
+  type    = string
   default = "2.0.0"
 }
 
 variable "ssh_public_key" {
+  type    = string
   default = ""
 }
 
 variable "defined_tags" {
+  type    = map(string)
   default = {}
 }

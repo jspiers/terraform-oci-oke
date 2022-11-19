@@ -10,7 +10,7 @@ data "oci_core_images" "node" {
 }
 
 data "oci_core_services" "all" {
-  count = var.use_existing_vcn ? 0 : 1
+  # count = var.use_existing_vcn ? 0 : 1
   filter {
     name   = "name"
     values = ["All .* Services In Oracle Services Network"]
