@@ -65,7 +65,7 @@ variable "is_nodes_subnet_public" {
 
 variable "is_pv_encryption_in_transit_enabled" {
   type    = bool
-  default = true
+  default = false
 }
 
 variable "pods_cidr" {
