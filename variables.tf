@@ -4,7 +4,7 @@ variable "compartment_id" {
 
 variable "vcn_name" {
   type    = string
-  default = "cusk"
+  default = "vcn"
 }
 
 variable "vcn_cidr" {
@@ -14,7 +14,7 @@ variable "vcn_cidr" {
 
 variable "cluster_name" {
   type    = string
-  default = "nautilus"
+  default = "oke"
 }
 
 variable "kubernetes_version" {
@@ -30,6 +30,8 @@ variable "node_pools" {
     size                     = number
     operating_system         = string
     operating_system_version = string
+    initial_node_labels      = map(string)
+    boot_volume_size_in_gbs  = number
   }))
   default = {
     trident = {
@@ -39,13 +41,12 @@ variable "node_pools" {
       size                     = 3
       operating_system         = "Oracle Linux"
       operating_system_version = "8"
+      initial_node_labels = {
+        key = "value"
+      }
+      boot_volume_size_in_gbs = null # use default
     }
   }
-}
-
-variable "vcn_native" {
-  type    = bool
-  default = true
 }
 
 variable "is_api_subnet_public" {
@@ -93,16 +94,6 @@ variable "is_pod_security_policy_enabled" {
   default = false
 }
 
-variable "node_pool_initial_node_labels_key" {
-  type    = string
-  default = "key"
-}
-
-variable "node_pool_initial_node_labels_value" {
-  type    = string
-  default = "value"
-}
-
 variable "cluster_kube_config_token_version" {
   type    = string
   default = "2.0.0"
@@ -115,5 +106,5 @@ variable "ssh_public_key" {
 
 variable "defined_tags" {
   type    = map(string)
-  default = {}
+  default = null
 }

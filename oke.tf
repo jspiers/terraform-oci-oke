@@ -8,15 +8,10 @@ resource "oci_containerengine_cluster" "cluster" {
   compartment_id     = var.compartment_id
   kubernetes_version = var.kubernetes_version
   name               = var.cluster_name
-  # vcn_id             = var.use_existing_vcn ? var.vcn_id : oci_core_vcn.vcn[0].id
-  vcn_id = oci_core_vcn.vcn.id
-
-  dynamic "endpoint_config" {
-    for_each = var.vcn_native ? [1] : []
-    content {
-      is_public_ip_enabled = var.is_api_subnet_public
-      subnet_id            = oci_core_subnet.api.id
-    }
+  vcn_id             = oci_core_vcn.vcn.id
+  endpoint_config {
+    is_public_ip_enabled = var.is_api_subnet_public
+    subnet_id            = oci_core_subnet.api.id
   }
 
   options {
@@ -50,15 +45,19 @@ resource "oci_containerengine_node_pool" "pools" {
     ocpus         = each.value.ocpus
     memory_in_gbs = each.value.memory
   }
-  initial_node_labels {
-    key   = var.node_pool_initial_node_labels_key
-    value = var.node_pool_initial_node_labels_value
+
+  dynamic "initial_node_labels" {
+    for_each = each.value.initial_node_labels
+    content {
+      key   = initial_node_labels.key
+      value = initial_node_labels.value
+    }
   }
+
   node_source_details {
-    # Use latest compatible image if none is explicitly specified
-    image_id    = data.oci_core_images.node[each.key].images[0].id
-    source_type = "IMAGE"
-    # boot_volume_size_in_gbs = each.value.boot_volume_size_in_gbs
+    image_id                = data.oci_core_images.node[each.key].images[0].id
+    source_type             = "IMAGE"
+    boot_volume_size_in_gbs = each.value.boot_volume_size_in_gbs
   }
   ssh_public_key = var.ssh_public_key != "" ? var.ssh_public_key : tls_private_key.public_private_key_pair[0].public_key_openssh
   node_config_details {
