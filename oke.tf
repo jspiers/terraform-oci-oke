@@ -12,6 +12,7 @@ resource "oci_containerengine_cluster" "cluster" {
   endpoint_config {
     is_public_ip_enabled = var.is_api_subnet_public
     subnet_id            = oci_core_subnet.api.id
+    nsg_ids              = []
   }
 
   options {
