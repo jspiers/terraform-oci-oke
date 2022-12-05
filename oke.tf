@@ -42,9 +42,14 @@ resource "oci_containerengine_node_pool" "pools" {
   kubernetes_version = var.kubernetes_version
   name               = each.key
   node_shape         = each.value.shape
-  node_shape_config {
-    ocpus         = each.value.ocpus
-    memory_in_gbs = each.value.memory
+
+  # Add node shape config only if ocpus/memory values are provided
+  dynamic "node_shape_config" {
+    for_each = each.value.ocpus != null ? ["yes"] : []
+    content {
+      ocpus         = each.value.ocpus
+      memory_in_gbs = each.value.memory
+    }
   }
 
   dynamic "initial_node_labels" {
