@@ -19,7 +19,7 @@ variable "cluster_name" {
 
 variable "kubernetes_version" {
   type    = string
-  default = "v1.24.1"
+  default = "v1.26.2"
 }
 
 variable "node_pools" {
